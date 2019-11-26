@@ -1,0 +1,14 @@
+{% extends 'accounts/main.html' %}
+{% block title %}edit_user_names{% endblock title %}
+{% block body %}
+
+
+<form method='POST' action="{% url 'accounts:edit_user_names' %}">
+    {% csrf_token %}
+    {{ form.first_name }}
+    {{ form.last_name }}
+
+    <button type="submit">Save</button>
+</form>
+
+{% endblock body %}

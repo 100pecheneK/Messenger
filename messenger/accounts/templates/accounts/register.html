@@ -1,0 +1,23 @@
+{% extends 'accounts/main.html' %}
+{% block title %}Register{% endblock title %}
+{% block body %}
+
+<form method='POST' action="{% url 'accounts:register' %}">{% csrf_token %}
+    {% if form.username.errors %} {% endif %}
+    {{ form.username }}
+    {% if form.username.errors %}
+    {{ form.username.errors }}
+    {% endif %}
+    {{ form.password }}
+    {% if form.password.errors %}
+    {{ form.password.errors }}
+    {% endif %}
+    {{ form.password2 }}
+    {% if form.password.errors %}
+    {{ form.password.errors }}
+    {% endif %}
+    <button type="submit">Регистрация</button>
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'accounts/main.html' %}
+{% block title %}Settings{% endblock title %}
+{% block body %}
+<br>
+{% if request.user.is_superuser %}
+<a href="{% url 'accounts:register' %}">Создать пользователя</a>
+<a href="{% url 'accounts:user_management' %}">Управление пользователем</a>
+{% endif %}
+<a href="{% url 'accounts:personal_settings' %}">Личные настройки</a>
+
+
+{% endblock %}
