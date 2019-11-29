@@ -1,12 +1,23 @@
-{% extends 'accounts/main.html' %}
-{% block title %}Settings{% endblock title %}
-{% block body %}
-<br>
-{% if request.user.is_superuser %}
-<a href="{% url 'accounts:register' %}">Создать пользователя</a>
-<a href="{% url 'accounts:user_management' %}">Управление пользователем</a>
-{% endif %}
-<a href="{% url 'accounts:personal_settings' %}">Личные настройки</a>
+{% extends 'pwaMessenger/main.html' %}
+{% block title %}{{page_title}}{% endblock title %}
+{% block main %}
+
+    <div class="row px-4">
+        {% if request.user.is_superuser %}
+        <div class="col-12 p-3 mt-5">
+            <a href="{% url 'accounts:register' %}" class="btn btn-main settings">Создать пользователя</a>
+        </div>
+        <div class="col-12 p-3">
+            <a href="{% url 'accounts:user_management' %}" class="btn btn-main settings">Управление пользователем</a>
+        </div>
+        {% endif %}
+        <div class="col-12 p-3 mb-5">
+            <a href="{% url 'accounts:personal_settings' %}" class="btn btn-main settings">Личные настройки</a>
+        </div>
+        <div class="col-12 p-3">
+            <a href="{% url 'accounts:logout' %}" class="btn btn-main settings">Выйти</a>
+        </div>
+    </div>
 
 
 {% endblock %}

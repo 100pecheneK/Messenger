@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+{% load pwa %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    {% progressive_web_app_meta %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>Диалоги</title>
+
+    <!--    TODO Добавить свой Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'pwaMessenger/css/main.css' %}">
+    <!--    TODO Удалить все лишние иконки шрифта и оставить только нужные-->
+    <link rel="stylesheet" href="{% static 'pwaMessenger/css/all.css' %}">
+    <style>
+        /*TODO delete debug mode*/
+        .debug {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="debug">
+    <a class="root" href="{% url 'accounts:main' %}">main</a>
+    <a class="user" href="{% url 'accounts:logout' %}">logout</a>
+    <a class="user" href="{% url 'accounts:login' %}">login</a>
+    <a class="root" href="{% url 'accounts:register' %}">register</a>
+    <a class="user" href="{% url 'accounts:settings' %}">settings</a>
+    <a class="root" href="{% url 'accounts:user_management' %}">user_management</a>
+    <a class="user" href="{% url 'accounts:personal_settings' %}">personal_settings</a>
+</div>
+{% block login %}
+<div class="wrapper">
+
+
+    <header class="nav-panel header">
+        <h1>{% block title %}{{page_title}}{% endblock title %}</h1>
+    </header>
+    <div class="container main">
+        {% block main %}
+            <div class="row h-100">
+                <div class="col d-flex align-items-center justify-content-center">
+                    <h2>В разработке</h2>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+    <footer class="nav-panel footer">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center">
+                <div class="col-4 d-flex align-items-center justify-content-center">
+                    <a href="{% url 'accounts:contacts' %}" class="nav-link {% if page == 1 %}nav-link-active{% endif %}">
+                        <i class="fas fa-address-book"></i>
+                    </a>
+                </div>
+
+                <div class="col-4 d-flex align-items-center justify-content-center">
+                    <a href="{% url 'accounts:main' %}" class="nav-link {% if page == 2 %}nav-link-active{% endif %}">
+                        <i class="fas fa-comments"></i>
+                    </a>
+                </div>
+                <div class="col-4 d-flex align-items-center justify-content-center">
+                    <a href="{% url 'accounts:settings' %}" class="nav-link {% if page == 3 %}nav-link-active{% endif %}">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

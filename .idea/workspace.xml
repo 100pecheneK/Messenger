@@ -2,7 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bcc4341-3fa5-4d6f-ab73-5dc575ba0327" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/js/idb.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/js/idbop.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/js/serviceworker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messenger/pwaMessenger/templates/pwaMessenger/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/edit_user_login.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/edit_user_login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/edit_user_names.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/edit_user_names.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/personal_settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/personal_settings.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/settings.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/user_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/user_management.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/messenger/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/messenger/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/messenger/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/messenger/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,9 +31,48 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="db" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="db" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="db" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="db" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="auth_user: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaScript File" />
+        <option value="CSS File" />
         <option value="HTML File" />
       </list>
     </option>
@@ -24,13 +84,21 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/messenger" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/js" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/js" />
+      <recent name="$PROJECT_DIR$/messenger/static/pwaMessenger/js" />
+      <recent name="$PROJECT_DIR$/messenger/pwaMessenger/static" />
       <recent name="$PROJECT_DIR$/messenger" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -56,6 +124,10 @@
       <option name="presentableId" value="Default" />
       <updated>1574762037772</updated>
       <workItem from="1574762042014" duration="14687000" />
+      <workItem from="1574934642352" duration="3498000" />
+      <workItem from="1574940528583" duration="4349000" />
+      <workItem from="1574949662946" duration="1303000" />
+      <workItem from="1574962589733" duration="6701000" />
     </task>
     <servers />
   </component>
@@ -67,7 +139,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
