@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Общий чат</title>
+</head>
+<body>
+    <h1>Вы чате для рассылок</h1>
+    <textarea id="chat-log" cols="100" rows="20" readonly="readonly"></textarea><br/>
+    {% if superuser_check %}
+        <input id="chat-message-input" type="text" size="100"/><br/>
+        <input id="chat-message-submit" type="button" value="Send"/>
+    {% endif %}
+
+</body>
+</html>

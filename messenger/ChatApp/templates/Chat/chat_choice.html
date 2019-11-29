@@ -1,0 +1,15 @@
+{% extends 'pwaMessenger/main.html' %}
+{% block title %}{{page_title}}{% endblock title %}
+{% block main %}
+
+<div class="row m-0 scroll">
+    <div class="col-12">
+        {% for user in users %}
+    <div class="col-12 mt-1 p-3 d-flex align-items-center justify-content-between contact">
+        <h3>{{user}}</h3>
+        <a href="{% url 'Chat:room' user %}"><i class="fa fa-angle-right"></i></a>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

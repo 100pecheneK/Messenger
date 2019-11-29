@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     # Our apps
     'pwaMessenger',
     'accounts',
-
+    'ChatApp',
+    
+    # channels
+    'channels',
     # django-progressive-web-app
     'pwa',
 ]
@@ -73,8 +76,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'messenger.wsgi.application'
+# WSGI_APPLICATION = 'messenger.wsgi.application'
+ASGI_APPLICATION = 'messenger.routing.application'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('0.0.0.0', 6379)],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
