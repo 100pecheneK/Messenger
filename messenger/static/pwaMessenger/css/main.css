@@ -1,0 +1,180 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #000E14;
+}
+
+/* Обязательный стиль */
+@media (max-width: 767px) {
+    body {
+        position: fixed;
+        background-color: #212121;
+        color: white;
+        width: 100%;
+    }
+}
+
+.scroll {
+    overflow: scroll; /* Добавляем полосы прокрутки */
+    width: 100%; /* Ширина блока */
+    height: 500px; /* Высота блока */
+    padding: 5px; /* Поля вокруг текста */
+    border: solid 1px black; /* Параметры рамки */
+}
+
+.wrapper {
+    position: relative;
+    min-height: 100%;
+}
+
+.nav-panel {
+    background-color: #00070B;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    color: white;
+    padding: 10px;
+}
+
+.header {
+    height: 5%;
+    top: 0;
+}
+
+.footer {
+    height: 7%;
+    bottom: 0;
+    padding: 0;
+}
+
+/* Логин */
+.logo {
+    color: #F50053;
+}
+
+.form-group label {
+    color: white;
+}
+
+.form-control {
+    border-radius: 25px;
+}
+
+.form-login:active,
+.form-login:focus {
+    border: 2px solid #F50053;
+    box-shadow: unset;
+}
+
+.btn {
+    border-radius: 25px;
+}
+
+.btn-main {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    background-color: #f50053;
+    color: white;
+}
+
+.btn-main:active,
+.btn-main:focus {
+    transition: 0.2s;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 0 0 0.2rem rgba(245, 0, 83, 0.5);
+
+}
+
+.btn-login {
+    width: 60%;
+}
+
+/* Настройки */
+
+
+a {
+    text-decoration: none;
+}
+
+a:hover,
+a:active,
+a:focus {
+    text-decoration: none;
+    color: rgb(219, 12, 81);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 5px;
+}
+
+header h1 {
+    font-size: 20px;
+    margin: 0 auto;
+    padding: 10px 30px;
+    text-align: center;
+    min-width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.link {
+    color: #F50053;
+}
+
+.settings {
+    width: 100%;
+    font-size: 15px;
+
+}
+
+.nav-link {
+    color: #8a8a8a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+}
+
+.nav-link-active {
+    color: #F50053;
+}
+
+/* User management */
+.form-search {
+    background-color: black;
+    border-color: black;
+}
+
+.form-search:active,
+.form-search:focus {
+    background-color: black;
+    border: 2px solid #F50053;
+    box-shadow: unset;
+
+}
+
+.search-icon {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: white;
+    text-align: center;
+    white-space: nowrap;
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 0 25px 25px 0;
+}
+

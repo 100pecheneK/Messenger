@@ -5,37 +5,46 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import FormView
-from .forms import RegisterForm, LoginForm, EditUserNames, EditUserLogin
+
+from .forms import RegisterForm, LoginForm, EditUserNames
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 
 
-# ПРоверить пароль
-# user.check_password('пароль')
-
 @login_required()
 def main(request):
-    current_user = User.objects.get(username=request.user)
-    all_users = User.objects.all()
     context = {
-        'current_user': current_user,
-        'all_users': all_users,
+        'page': 2,
+        'page_title': 'Диалоги',
     }
-    return render(request, 'accounts/main.html', context)
+    return render(request, 'pwaMessenger/main.html', context)
+
+
+@login_required()
+def contacts(request):
+    context = {
+        'page': 1,
+        'page_title': 'Контакты',
+    }
+    return render(request, 'pwaMessenger/contacts.html', context)
 
 
 @login_required()
 def settings(request):
     context = {
-
+        'page': 3,
+        'page_title': 'Настройки',
     }
     return render(request, 'accounts/settings.html', context)
 
 
 @permission_required('polls.can_vote')
 def user_management(request):
+    users = User.objects.exclude(is_superuser=True)
     context = {
-
+        'page': 3,
+        'page_title': 'Управление пользователями',
+        'users': users,
     }
     return render(request, 'accounts/user_management.html', context)
 
@@ -44,9 +53,18 @@ def user_management(request):
 def personal_settings(request):
     current_user = User.objects.get(username=request.user)
     context = {
+        'page': 3,
+        'page_title': 'Личные настройки',
         'current_user': current_user,
     }
     return render(request, 'accounts/personal_settings.html', context)
+
+
+@permission_required('polls.can_vote')
+def delete_user(request, user_id):
+    user = User.objects.get(id=user_id)
+    user.delete()
+    return HttpResponseRedirect(reverse('accounts:user_management'))
 
 
 class EditNamesView(LoginRequiredMixin, FormView):
@@ -54,8 +72,15 @@ class EditNamesView(LoginRequiredMixin, FormView):
     page_title = 'Настройки'
     template_name = 'accounts/edit_user_names.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(EditNamesView, self).get_context_data(**kwargs)
+        context['page'] = 3
+        context['page_title'] = 'Личные настройки'
+        return context
+
     def get(self, request):
         form = EditUserNames()
+
         return super(EditNamesView, self).get(request, form=form)
 
     def post(self, request, *args, **kwargs):
@@ -72,28 +97,6 @@ class EditNamesView(LoginRequiredMixin, FormView):
         return super(EditNamesView, self).get(request, form=form)
 
 
-# class EditUserLoginView(LoginRequiredMixin, FormView):
-#     form_class = EditUserLogin
-#     page_title = 'Настройки'
-#     template_name = 'accounts/edit_user_login.html'
-#
-#     def get(self, request):
-#         form = EditUserLogin()
-#         return super(EditUserLoginView, self).get(request, form=form)
-#
-#     def post(self, request, *args, **kwargs):
-#         form = EditUserLogin(request.POST)
-#
-#         if form.is_valid():
-#             data = form.cleaned_data
-#             current_user = User.objects.get(username=request.user)
-#             current_user.username = data['username']
-#             current_user.save()
-#             return HttpResponseRedirect(reverse('accounts:settings'))
-#
-#         return super(EditUserLoginView, self).get(request, form=form)
-
-
 class RegisterView(PermissionRequiredMixin, FormView):
     permission_required = 'polls.can_vote'
 
@@ -101,8 +104,15 @@ class RegisterView(PermissionRequiredMixin, FormView):
     page_title = 'Register'
     template_name = 'accounts/register.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(RegisterView, self).get_context_data(**kwargs)
+        context['page'] = 3
+        context['page_title'] = 'Создать пользователя'
+        return context
+
     def get(self, request):
         form = RegisterForm()
+
         return super(RegisterView, self).get(request, form=form)
 
     def post(self, request, *args, **kwargs):
@@ -115,7 +125,7 @@ class RegisterView(PermissionRequiredMixin, FormView):
                 password=data['password'],
             )
             if new_profile:
-                return HttpResponseRedirect(reverse('accounts:login'))
+                return HttpResponseRedirect(reverse('accounts:settings'))
 
         return super(RegisterView, self).get(request, form=form)
 

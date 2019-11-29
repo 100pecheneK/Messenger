@@ -1,14 +1,23 @@
-{% extends 'accounts/main.html' %}
-{% block title %}edit_user_names{% endblock title %}
-{% block body %}
+{% extends 'pwaMessenger/main.html' %}
+{% block title %}{{page_title}}{% endblock title %}
+{% block main %}
 
 
-<form method='POST' action="{% url 'accounts:edit_user_names' %}">
-    {% csrf_token %}
-    {{ form.first_name }}
-    {{ form.last_name }}
+<div class="row px-4">
+    <div class="col-12 p-3 mt-5">
+        <form method='POST' action="{% url 'accounts:edit_user_names' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="loginInput">Имя</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group">
+                <label for="passwordInput">Фамилия</label>
+                {{ form.last_name }}
+            </div>
+            <button type="submit" class="btn btn-main btn-login">Изменить</button>
+        </form>
+    </div>
+</div>
 
-    <button type="submit">Save</button>
-</form>
-
-{% endblock body %}
+{% endblock main %}

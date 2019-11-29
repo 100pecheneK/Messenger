@@ -8,18 +8,21 @@ from accounts.tools import tools
 class RegisterForm(forms.ModelForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Имя пользователя',
-        'class': 'form-control',
-        'autocomplete': 'off'
+        'class': 'form-control form-login',
+        'autocomplete': 'off',
+        'id': 'loginInput',
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Пароль',
-        'class': 'form-control',
-        'autocomplete': 'off'
+        'class': 'form-control form-login',
+        'autocomplete': 'off',
+        'id': 'passwordInput',
     }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Пароль ещё раз',
-        'class': 'form-control',
-        'autocomplete': 'off'
+        'class': 'form-control form-login',
+        'autocomplete': 'off',
+        'id': 'passwordInput',
     }))
 
     class Meta:
@@ -49,13 +52,15 @@ class RegisterForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Имя пользователя',
-        'class': 'form-control',
-        'autocomplete': 'off'
+        'class': 'form-control form-login',
+        'autocomplete': 'off',
+        'id': 'loginInput',
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Пароль',
-        'class': 'form-control',
-        'autocomplete': 'off'
+        'class': 'form-control form-login',
+        'autocomplete': 'off',
+        'id': 'passwordInput',
     }))
 
     fields = {'username', 'password'}

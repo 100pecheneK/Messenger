@@ -1,14 +1,21 @@
-{% extends 'accounts/main.html' %}
-{% block title %}personal_settings{% endblock title %}
-{% block body %}
+{% extends 'pwaMessenger/main.html' %}
+{% block title %}{{page_title}}{% endblock title %}
+{% block main %}
 
-current_user = {{ current_user }}<br>
-<hr>
-first_name = {{ current_user.first_name }}<br>
-last_name = {{ current_user.last_name }}<br>
-<a href="{% url 'accounts:edit_user_names' %}">Edit</a>
-<hr>
-password = {{ current_user.password }}<br>
-<a href="#">Edit</a>
-<hr>
-{% endblock body %}
+
+<div class="row px-4">
+    <div class="col-12 p-3 mt-5">
+        <h5>Логин = {{ current_user }}</h5>
+    </div>
+    <div class="col-12 p-3">
+        <h5>Имя = {{ current_user.first_name }}</h5>
+    </div>
+    <div class="col-12 p-3">
+        <h5>Фамилия = {{ current_user.last_name }}</h5>
+    </div>
+    <div class="col-12 p-3 mt-5">
+        <a href="{% url 'accounts:edit_user_names' %}" class="btn btn-main">Изменить</a>
+    </div>
+
+</div>
+{% endblock %}
