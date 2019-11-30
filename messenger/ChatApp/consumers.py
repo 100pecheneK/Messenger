@@ -1,7 +1,8 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
 import json
-import asyncio
-import time
+
+# from ChatApp.models import Message
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -15,42 +16,50 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.channel_name
         )
         await self.accept()
+        print('Соединение установлено!')
+
+        await self.send(json.dumps({
+            'still_online': 'True',
+            # 'still_online': still_online,
+        }))
 
     async def disconnect(self, close_code):
         # Leave room group
         await self.channel_layer.group_discard(
             self.room_group_name,
-            self.channel_name
+            self.channel_name,
         )
 
     # Receive message from WebSocket
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        # still_online = text_data_json['still_online']
 
+        if 'message' in text_data_json:
+            message = text_data_json['message']
 
+            #Занесение сообщения в БД
+            # create_message(content = message)
 
-        # Send message to room group
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message
-            },
-        )
-        # time.sleep(5000)
-        # await self.channel_layer.group_send(
-        #     self.room_group_name,
-        #     {'user_online': still_online}
-        # )
+            # Send message to room group
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'chat_message',
+                    'message': message,
+                }
+            )
 
     # Receive message from room group
 
     async def chat_message(self, event):
-        message = event['message']
+        if (event['message']):
+            message = event['message']
 
-        # Send message to WebSocket
-        await self.send(text_data=json.dumps({
-            'message': message
-        }))
+            # Send message to WebSocket
+            await self.send(text_data=json.dumps({
+                'message': message,
+            }))
+
+    # @database_sync_to_async
+    # def create_message(self, content):
+    #     Message.objects.create(content=content)
