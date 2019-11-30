@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import FormView
 
-from .forms import RegisterForm, LoginForm, EditUserNames
+from .forms import RegisterForm, LoginForm, EditUserNames, EditUserPhoto
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 
@@ -96,6 +96,7 @@ class EditNamesView(LoginRequiredMixin, FormView):
 
         return super(EditNamesView, self).get(request, form=form)
 
+# TODO EditUserPhoto here
 
 class RegisterView(PermissionRequiredMixin, FormView):
     permission_required = 'polls.can_vote'

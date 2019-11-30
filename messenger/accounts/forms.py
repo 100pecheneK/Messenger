@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate
 from accounts.tools import tools
+from .models import Profile
 
 
 class RegisterForm(forms.ModelForm):
@@ -106,67 +107,7 @@ class EditUserNames(forms.Form):
         return last_name
 
 
-class EditUserLogin(forms.Form):
-    old_username = forms.CharField(widget=forms.HiddenInput())
-
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Новоый логин',
-        'class': 'form-control',
-        'autocomplete': 'off'
-    }))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Пароль для подтверждения',
-        'class': 'form-control',
-        'autocomplete': 'off'
-    }))
-
+class EditUserPhoto(forms.ModelForm):
     class Meta:
-        model = User
-        fields = {'username', 'password'}
-
-    # def __init__(self, login=None, *args, **kwargs):
-    #     super(EditUserLogin, self).__init__(*args, **kwargs)
-    #     self.fields['old_username'].initial = User.objects.get(username=login)
-
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        try:
-            tools.change_widget_attrs_class_to_invalid(self, 'username', 'Имя пользователя')
-            user = User.objects.get(username=username)
-            raise ValidationError('Имя пользователя занято')
-        except User.DoesNotExist:
-            tools.change_widget_attrs_class_to_valid(self, 'username', 'Имя пользователя')
-            return username
-
-    def clean_password(self):
-        username = self.data['old_username']
-        password = self.cleaned_data['password']
-        user = authenticate(username=username, password=password)
-        if user is None:
-            tools.change_widget_attrs_class_to_invalid(self, 'password', 'Пароль')
-            raise ValidationError('Пароль не верный')
-        return password
-
-
-# TODO Удалить
-class EditUserPassword(forms.Form):
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Старый пароль',
-        'class': 'form-control',
-        'autocomplete': 'off'
-    }))
-    new_password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Новый пароль',
-        'class': 'form-control',
-        'autocomplete': 'off'
-    }))
-
-    def clean_password(self):
-        username = self.data['username']
-        password = self.cleaned_data['password']
-        new_password = self.data['new_password']
-        user = authenticate(username=username, password=password)
-        if user is None:
-            tools.change_widget_attrs_class_to_invalid(self, 'password', 'Старый пароль')
-            raise ValidationError('Пароль не верный')
-        return new_password
+        model = Profile
+        fields = ('photo',)
