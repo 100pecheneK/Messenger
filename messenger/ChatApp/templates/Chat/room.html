@@ -2,58 +2,51 @@
 {% block title %}{{page_title}}{% endblock title %}
 {% block main %}
 <div class="row h-100">
-    <div class="col-12 m-0 dialog">
+    <div class="col-12 m-0 dialog" id="dialog">
         <!--    TODO: Это твой инпут -->
-        <textarea id="chat-log" cols="100" rows="10"></textarea><br/>
+        <textarea id="chat-log" cols="100" rows="10"></textarea><br />
 
-        <!--        <div class="col-12">-->
-        <!--&lt;!&ndash;            lest msg&ndash;&gt;-->
-        <!--            <div class="row">-->
-        <!--                <div class="col-12 question justify-content-start mt-3">-->
-        <!--                    <div class="row">-->
-        <!--                        <div class="col-8">-->
-        <!--                            <div class="bubble bubble-question">-->
-        <!--                                <span>Привет!</span>-->
-        <!--                            </div>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--            &lt;!&ndash;            lest msg&ndash;&gt;-->
-        <!--            <div class="row">-->
-        <!--                <div class="col-12 question justify-content-start mt-3">-->
-        <!--                    <div class="row">-->
-        <!--                        <div class="col-8">-->
-        <!--                            <div class="bubble bubble-question">-->
-        <!--                                <span>Привет!</span>-->
-        <!--                            </div>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--            &lt;!&ndash;            Right msg &ndash;&gt;-->
-        <!--            <div class="row">-->
-        <!--                <div class="col-12 answer justify-content-end mt-3">-->
-        <!--                    <div class="row justify-content-end">-->
-        <!--                        <div class="col-8 d-flex justify-content-end">-->
-        <!--                            <div class="bubble bubble-answer">-->
-        <!--                                <span>Привет!</span>-->
-        <!--                            </div>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
+        <div class="col-12" id="messagesWindows">
+            {% for msg in messages %}
+            {% if msg.author != request.user %}
+            <div class="row">
+                <div class="col-12 question justify-content-start mt-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="bubble bubble-question">
+                                <span>{{msg.content}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="row">
+                <div class="col-12 answer justify-content-end mt-3">
+                    <div class="row justify-content-end">
+                        <div class="col-8 d-flex justify-content-end">
+                            <div class="bubble bubble-answer">
+                                <span>{{msg.content}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <h5>request.user = {{ request.user }}</h5>
+            <h5>room_name_json = {{room_name_json}}</h5>
+        </div>
 
-        <!--        </div>-->
-        <h5>request.user = {{ request.user }}</h5>
-        <h5>room_name_json = {{room_name_json}}</h5>
+
 
     </div>
     <div class="col-10 pr-0">
         <input type="text" class="form-control form-login input-msg rounded-0" id="chat-message-input">
     </div>
     <div class="col-2 pl-0">
-        <button type="button" class="btn btn-main send-msg rounded-0" id="chat-message-submit"><i class="fa fa-arrow-alt-circle-up"></i></button>
+        <button type="button" class="btn btn-main send-msg rounded-0" id="chat-message-submit"><i
+                class="fa fa-arrow-alt-circle-up"></i></button>
     </div>
 </div>
 
@@ -61,23 +54,60 @@
 {% endblock main %}
 {% block scripts %}
 <script>
+    function scrollDialog() {
+        // Прокркутить dialog до низу
+        var div = $("#dialog");
+        div.scrollTop(div.prop('scrollHeight'));
 
-    let roomName = {{room_name_json}};
-    let cur_user = {{current_user}};
+    }
+    function createDivMessageAnswer(content) {
+
+        var div = document.createElement('div');
+        div.className = "row";
+        div.innerHTML = '<div class="col-12 answer justify-content-end mt-3"><div class="row justify-content-end"><div class="col-8 d-flex justify-content-end"><div class="bubble bubble-answer"><span>' + content + '</span></div></div></div></div>';
+        return div;
+    }
+    function createDivMessageQuestion(content) {
+        var div = document.createElement('div');
+        div.className = "row";
+        div.innerHTML = '<div class="row"><div class="col-12 question justify-content-start mt-3"><div class="row"><div class="col-8"><div class="bubble bubble-question"><span>' + content + '</span></div></div></div></div></div>';
+        return div;
+    }
+
+</script>
+<script>
+    scrollDialog()
+    let roomName = {{ room_name_json }};
+    let cur_user = {{ current_user }};
+    let current_room_name = {{ current_room_name }};
+
+    // let messages = {{ messages }}
     //создаем сокет
     let chatSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/');
 
 
+
     // обработка сообщений с бэкенда
     chatSocket.onmessage = function (e) {
         let data = JSON.parse(e.data);
 
-// let still_online = data['still_online'];
+        // let still_online = data['still_online'];
         if (data['message']) {
             var message = data['message'];
-            document.querySelector('#chat-log').value += (cur_user + '--->' + message + '\n');
+            var author = data['author'];
+            document.querySelector('#chat-log').value += (author + '--->' + message + '\n');
+
+            if (author == cur_user) {
+                var msg = createDivMessageAnswer(message);
+            } else {
+                var msg = createDivMessageQuestion(message);
+            }
+            let main = $('#dialog');
+            main.append(msg);
+            scrollDialog()
+
         }
     };
 
@@ -91,14 +121,15 @@
     //     if (e.keyCode === 13) {  // enter, return
     //         document.querySelector('#chat-message-submit').click();
     //     }
-
+    // };
     //отправляем на бэкенд сообщение пользователя
     document.querySelector('#chat-message-submit').onclick = function (e) {
         let messageInputDom = document.querySelector('#chat-message-input');
         let message = messageInputDom.value;
         chatSocket.send(JSON.stringify({
             'message': message,
-// 'author' : cur_user,
+            'author': cur_user,
+            'current_room_name': current_room_name,
         }));
 
         messageInputDom.value = '';
@@ -109,7 +140,6 @@
     function delay() {
         return new Promise(resolve => setTimeout(resolve, 5000));
     }
-
     //Держим сокет открытым
     async function get_page_alive() {
         while (true) {

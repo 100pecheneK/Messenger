@@ -134,7 +134,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR + '/static'
 
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'pwaMessenger/static/js', 'serviceworker.js')
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'pwaMessenger/static/js/pwaMessenger', 'serviceworker.js')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
