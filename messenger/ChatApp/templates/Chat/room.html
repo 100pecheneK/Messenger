@@ -3,9 +3,6 @@
 {% block main %}
 <div class="row h-100">
     <div class="col-12 m-0 dialog" id="dialog">
-        <!--    TODO: Это твой инпут -->
-        <textarea id="chat-log" cols="100" rows="10"></textarea><br />
-
         <div class="col-12" id="messagesWindows">
             {% for msg in messages %}
             {% if msg.author != request.user %}
@@ -34,12 +31,7 @@
             </div>
             {% endif %}
             {% endfor %}
-            <h5>request.user = {{ request.user }}</h5>
-            <h5>room_name_json = {{room_name_json}}</h5>
         </div>
-
-
-
     </div>
     <div class="col-10 pr-0">
         <input type="text" class="form-control form-login input-msg rounded-0" id="chat-message-input">
@@ -70,13 +62,13 @@
     function createDivMessageQuestion(content) {
         var div = document.createElement('div');
         div.className = "row";
-        div.innerHTML = '<div class="row"><div class="col-12 question justify-content-start mt-3"><div class="row"><div class="col-8"><div class="bubble bubble-question"><span>' + content + '</span></div></div></div></div></div>';
+        div.innerHTML = '<div class="col-12 question justify-content-start mt-3"><div class="row"><div class="col-8"><div class="bubble bubble-question"><span>' + content + '</span></div></div></div></div>';
         return div;
     }
 
 </script>
 <script>
-    scrollDialog()
+    scrollDialog();
     let roomName = {{ room_name_json }};
     let cur_user = {{ current_user }};
     let current_room_name = {{ current_room_name }};
@@ -97,14 +89,13 @@
         if (data['message']) {
             var message = data['message'];
             var author = data['author'];
-            document.querySelector('#chat-log').value += (author + '--->' + message + '\n');
 
             if (author == cur_user) {
                 var msg = createDivMessageAnswer(message);
             } else {
                 var msg = createDivMessageQuestion(message);
             }
-            let main = $('#dialog');
+            let main = $('#messagesWindows');
             main.append(msg);
             scrollDialog()
 
@@ -122,6 +113,7 @@
     //         document.querySelector('#chat-message-submit').click();
     //     }
     // };
+
     //отправляем на бэкенд сообщение пользователя
     document.querySelector('#chat-message-submit').onclick = function (e) {
         let messageInputDom = document.querySelector('#chat-message-input');
