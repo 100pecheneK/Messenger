@@ -3,8 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="1bcc4341-3fa5-4d6f-ab73-5dc575ba0327" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/ChatApp/templates/Chat/room.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/ChatApp/templates/Chat/room.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/edit_user_names.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/edit_user_names.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/personal_settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/personal_settings.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/messenger/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/messenger/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/messenger/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/main.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +66,9 @@
       </path>
     </expand>
     <select />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Messenger" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -135,6 +144,7 @@
       <workItem from="1575090761420" duration="3807000" />
       <workItem from="1575263865586" duration="114000" />
       <workItem from="1575268583743" duration="2592000" />
+      <workItem from="1575350954466" duration="5505000" />
     </task>
     <servers />
   </component>

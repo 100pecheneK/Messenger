@@ -6,8 +6,9 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import FormView
 
+from .models import Profile
 from .forms import RegisterForm, LoginForm, EditUserNames, EditUserPhoto
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 
 
@@ -51,7 +52,7 @@ def user_management(request):
 
 @login_required()
 def personal_settings(request):
-    current_user = User.objects.get(username=request.user)
+    current_user = Profile.objects.get(user__username=request.user)
     context = {
         'page': 3,
         'page_title': 'Личные настройки',
@@ -96,7 +97,70 @@ class EditNamesView(LoginRequiredMixin, FormView):
 
         return super(EditNamesView, self).get(request, form=form)
 
-# TODO EditUserPhoto here
+
+@login_required()
+def edit_user_img(request):
+    data = Profile.objects.get(user__username=request.user)
+    form = EditUserPhoto(instance=data)
+    if request.POST:
+        data = Profile.objects.get(user__username=request.user)
+        form = EditUserPhoto(request.POST, request.FILES, instance=data)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user_id = request.user
+            image.save()
+            return HttpResponseRedirect(reverse('accounts:settings'))
+    context = {
+        'form': form,
+    }
+    return render(request, "accounts/edit_user_img.html", context)
+
+
+# class EditUserImg(LoginRequiredMixin, FormView):
+#     form_class = EditUserPhoto
+#     page_title = 'Настройки'
+#     template_name = 'accounts/edit_user_img.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(EditUserImg, self).get_context_data(**kwargs)
+#         context['page'] = 3
+#         context['page_title'] = 'Личные настройки'
+#         return context
+#
+#     def get(self, request):
+#         form = EditUserImg()
+#         return super(EditUserImg, self).get(request, form=form)
+#
+#     def post(self, request, *args, **kwargs):
+#         form = EditUserImg(request.POST)
+#
+#         if form.is_valid():
+#             current_user = Profile.objects.get(user__username=request.user)
+#             photo = request.FILES['photo']
+#             current_user.photo = photo
+#             current_user.save()
+#             return HttpResponseRedirect(reverse('accounts:settings'))
+#
+#         return super(EditUserImg, self).get(request, form=form)
+
+
+# def edit_user_img(request):
+#     form = EditUserPhoto()
+#     if request.method == 'POST':
+#         form = EditUserPhoto(request.POST, request.FILES)
+#         if form.is_valid():
+#             if 'photo' in request.FILES:
+#                 form.photo = request.FILES['photo']
+#             form.save(commit=True)
+#             return HttpResponseRedirect(reverse('accounts:settings'))
+#         else:
+#             print(form.errors)
+#         context = {
+#             'form': form,
+#             'page_title': 'Настройки',
+#         }
+#         return render(request, 'accounts/add_simple_flower.html', context)
+
 
 class RegisterView(PermissionRequiredMixin, FormView):
     permission_required = 'polls.can_vote'
