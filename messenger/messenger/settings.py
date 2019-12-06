@@ -44,8 +44,6 @@ INSTALLED_APPS = [
 
     # channels
     'channels',
-    # django-progressive-web-app
-    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -130,9 +128,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'pwaMessenger/static/js/pwaMessenger', 'serviceworker.js')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'

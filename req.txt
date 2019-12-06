@@ -5,6 +5,7 @@ async-timeout==3.0.1
 attrs==19.3.0
 autobahn==19.11.1
 Automat==0.8.0
+autopep8==1.4.4
 backcall==0.1.0
 cffi==1.13.2
 channels==2.3.1
@@ -14,7 +15,6 @@ cryptography==2.8
 daphne==2.4.0
 decorator==4.4.1
 Django==2.2.7
-django-progressive-web-app==0.1.1
 hiredis==1.0.1
 hyperlink==19.0.0
 idna==2.8
@@ -31,6 +31,7 @@ prompt-toolkit==2.0.10
 ptyprocess==0.6.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.7
+pycodestyle==2.5.0
 pycparser==2.19
 Pygments==2.4.2
 PyHamcrest==1.9.0
