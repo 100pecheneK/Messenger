@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1bcc4341-3fa5-4d6f-ab73-5dc575ba0327" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/edit_user_names.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/edit_user_names.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/accounts/templates/accounts/personal_settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/templates/accounts/personal_settings.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/messenger/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/messenger/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/main.css" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,13 +75,24 @@
   </component>
   <component name="ProjectId" id="1U9Hl0AvNY376ari0XvAJbZED4u" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/js" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -103,26 +105,16 @@
       <recent name="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="ServiceViewManager">
-    <option name="allServicesViewState">
-      <serviceView>
-        <treeState>
-          <expand />
-          <select />
-        </treeState>
-      </serviceView>
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
     </option>
   </component>
   <component name="SvnConfiguration">
@@ -145,7 +137,24 @@
       <workItem from="1575263865586" duration="114000" />
       <workItem from="1575268583743" duration="2592000" />
       <workItem from="1575350954466" duration="5505000" />
+      <workItem from="1575377707884" duration="4902000" />
+      <workItem from="1575387957587" duration="2573000" />
+      <workItem from="1575434139478" duration="12062000" />
+      <workItem from="1575453526359" duration="471000" />
+      <workItem from="1575454082911" duration="10814000" />
+      <workItem from="1575519296221" duration="214000" />
+      <workItem from="1575520064552" duration="1288000" />
+      <workItem from="1575534646944" duration="14453000" />
+      <workItem from="1575602207415" duration="1815000" />
     </task>
+    <task id="LOCAL-00001" summary="commit">
+      <created>1575611706438</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1575611706439</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,5 +172,23 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="281" y="27" width="860" height="741" key="CommitChangelistDialog2" timestamp="1575611704362">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="281" y="27" width="860" height="741" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1575611704362" />
+    <state x="311" y="122" width="800" height="558" key="Vcs.Push.Dialog.v2" timestamp="1575611721855">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="311" y="122" width="800" height="558" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1575611721855" />
+    <state x="372" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1575602224994">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="372" y="225" key="com.intellij.ide.util.TipDialog/67.27.1299.741@67.27.1299.741" timestamp="1575602224994" />
   </component>
 </project>

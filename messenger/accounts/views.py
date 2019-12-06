@@ -12,22 +12,36 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 
 
+# Изменения: закомментировал contacts (теперь его роль исполняет main)
+
+
 @login_required()
 def main(request):
-    context = {
-        'page': 2,
-        'page_title': 'Диалоги',
-    }
-    return render(request, 'pwaMessenger/main.html', context)
+    search_query = request.GET.get('search', '')
 
+    if request.user.is_superuser:
+        users = User.objects.exclude(is_superuser=True)
+        if search_query:
+            users = User.objects.filter(username__icontains=search_query)
+    else:
+        users = User.objects.filter(username=request.user)
 
-@login_required()
-def contacts(request):
     context = {
         'page': 1,
         'page_title': 'Контакты',
+        'users': users,
     }
+    # return render(request, 'pwaMessenger/main.html', context)
     return render(request, 'pwaMessenger/contacts.html', context)
+
+
+# @login_required()
+# def contacts(request):
+#     context = {
+#         'page': 1,
+#         'page_title': 'Контакты',
+#     }
+#     return render(request, 'pwaMessenger/contacts.html', context)
 
 
 @login_required()
