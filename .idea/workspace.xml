@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bcc4341-3fa5-4d6f-ab73-5dc575ba0327" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Messenger.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Messenger.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/ChatApp/templates/Chat/chat_choice.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/ChatApp/templates/Chat/chat_choice.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/ChatApp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/ChatApp/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/ChatApp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/ChatApp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/accounts/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/pwaMessenger/templates/pwaMessenger/contacts.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/pwaMessenger/templates/pwaMessenger/contacts.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messenger/pwaMessenger/templates/pwaMessenger/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/pwaMessenger/templates/pwaMessenger/main.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,8 +145,16 @@
       <workItem from="1575519296221" duration="214000" />
       <workItem from="1575520064552" duration="1288000" />
       <workItem from="1575534646944" duration="14453000" />
-      <workItem from="1575602207415" duration="1541000" />
+      <workItem from="1575602207415" duration="1815000" />
     </task>
+    <task id="LOCAL-00001" summary="commit">
+      <created>1575611706438</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1575611706439</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,11 +173,19 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="281" y="27" width="860" height="741" key="CommitChangelistDialog2" timestamp="1575611704362">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="281" y="27" width="860" height="741" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1575611704362" />
+    <state x="311" y="122" width="800" height="558" key="Vcs.Push.Dialog.v2" timestamp="1575611721855">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="311" y="122" width="800" height="558" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1575611721855" />
     <state x="372" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1575602224994">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
