@@ -2,26 +2,84 @@
 {% block title %}{{page_title}}{% endblock title %}
 {% block main %}
 
-<div class="row h-100">
-    <div class="col d-flex align-items-center justify-content-center">
+<!--Поиск-->
+<!--<form class="form-inline" action="{% url 'accounts:main' %}" method="GET">-->
+<!--    {% csrf_token %}-->
+<!--    <div class="col-10 pr-0">-->
+<!--        <input type="text" class="form-control form-login input-msg search-input" name="search" autocomplete="off"-->
+<!--               id="chat-message-input" placeholder="Найти контакт...">-->
+<!--    </div>-->
+<!--    <div class="col-2 pl-0">-->
+<!--        <button type="submit" class="btn btn-main send-msg search-btn" id="chat-message-submit"><i-->
+<!--                class="fa fa-search"></i></button>-->
+<!--    </div>-->
+<!--</form>-->
+
+
+<div class="row m-0 scroll">
+
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <select class="js-example-basic-single" name="state" style="width: 100%;">
+                    <option></option>
+                    {% for user in users %}
+                    <option data-url="{% url 'Chat:room' user %}">{{user}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
         {% for user in users %}
-        <a class="root" href="{% url 'Chat:room' user %}">{{user}}</a><br>
+        <div class="col-12 mt-1 p-3 d-flex align-items-center justify-content-between contact">
+            <h3>{{user}}</h3>
+            <a href="{% url 'Chat:room' user %}"><i class="fa fa-angle-right"></i></a>
+        </div>
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}
 {% block scripts %}
+<!--  Адаптивный поиск  -->
 <script>
-    document.querySelector('#room-name-input').focus();
-    document.querySelector('#room-name-input').onkeyup = function (e) {
-        if (e.keyCode === 13) {  // enter, return
-            document.querySelector('#room-name-submit').click();
+    function matchCustom(params, data) {
+        // If there are no search terms, return all of the data
+        if ($.trim(params.term) === '') {
+            return 'Введите что-нибудь...';
         }
-    };
 
-    document.querySelector('#room-name-submit').onclick = function (e) {
-        let roomName = document.querySelector('#room-name-input').value;
-        window.location.pathname = '/chat/' + roomName + '/';
-    };
+        // Do not display the item if there is no 'text' property
+        if (typeof data.text === 'undefined') {
+            return null;
+        }
+
+        // `params.term` should be the term that is used for searching
+        // `data.text` is the text that is displayed for the data object
+        if (data.text.indexOf(params.term) > -1) {
+            var modifiedData = $.extend({}, data, true);
+            modifiedData.text += ' (matched)';
+
+            // You can return modified objects from here
+            // This includes matching the `children` how you want in nested data sets
+            return modifiedData;
+        }
+
+        // Return `null` if the term should not be displayed
+        return null;
+    }
+
+    $(".js-example-basic-single").select2({
+        placeholder: "Найти контакт...",
+        allowClear: true,
+        matcher: matchCustom,
+    });
+
+    //Переход по результату
+    $(".js-example-basic-single").change(function () {
+        let option = $(this).find('option:selected');
+        if (option.data("url")) {
+            window.location.href = option.data("url");
+        }
+    });
 </script>
 {% endblock %}

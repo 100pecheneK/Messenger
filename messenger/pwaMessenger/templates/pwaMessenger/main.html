@@ -8,13 +8,17 @@
     {% progressive_web_app_meta %}
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <title>Диалоги</title>
 
     <link rel="stylesheet" href="{% static 'pwaMessenger/css/bootstrap.min.css' %}">
     <!--    TODO Удалить все лишние иконки шрифта и оставить только нужные-->
     <link rel="stylesheet" href="{% static 'pwaMessenger/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'pwaMessenger/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'pwaMessenger/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pwaMessenger/css/mdb.min.css' %}">
+<!--    <link rel="stylesheet" href="{% static 'pwaMessenger/css/bootstrap-multiselect.css' %}">-->
+
     <style>
         /*TODO delete debug mode*/
         .debug {
@@ -24,70 +28,60 @@
 </head>
 
 <body>
-    <div class="debug">
-        <a class="root" href="{% url 'accounts:main' %}">main</a>
-        <a class="user" href="{% url 'accounts:logout' %}">logout</a>
-        <a class="user" href="{% url 'accounts:login' %}">login</a>
-        <a class="root" href="{% url 'accounts:register' %}">register</a>
-        <a class="user" href="{% url 'accounts:settings' %}">settings</a>
-        <a class="root" href="{% url 'accounts:user_management' %}">user_management</a>
-        <a class="user" href="{% url 'accounts:personal_settings' %}">personal_settings</a>
+
+{% block login %}
+<div class="wrapper">
+
+    <header class="nav-panel header">
+        <h1>{% block title %}{{page_title}}{% endblock title %}</h1>
+    </header>
+    <div class="container main">
+        {% block main %}
+
+        {% endblock %}
     </div>
-    {% block login %}
-    <div class="wrapper">
+    <footer class="nav-panel footer">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center">
+                <div class="col-4 d-flex align-items-center justify-content-center">
+                    <a href="{% url 'accounts:main' %}"
+                       class="nav-link {% if page == 1 %}nav-link-active{% endif %}">
+                        <i class="fas fa-address-book"></i>
+                    </a>
+                </div>
 
-
-        <header class="nav-panel header">
-            <h1>{% block title %}{{page_title}}{% endblock title %}</h1>
-        </header>
-        <div class="container main">
-            {% block main %}
-
-            {% endblock %}
-        </div>
-        <footer class="nav-panel footer">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center justify-content-center">
-                    <div class="col-4 d-flex align-items-center justify-content-center">
-                        <a href="{% url 'Chat:chat_choice' %}"
-                            class="nav-link {% if page == 1 %}nav-link-active{% endif %}">
-                            <i class="fas fa-address-book"></i>
-                        </a>
-                    </div>
-
-                    <div class="col-4 d-flex align-items-center justify-content-center">
-                        <a href="{% url 'accounts:main' %}"
-                            class="nav-link {% if page == 2 %}nav-link-active{% endif %}">
-                            <i class="fas fa-comments"></i>
-                        </a>
-                    </div>
-                    <div class="col-4 d-flex align-items-center justify-content-center">
-                        <a href="{% url 'accounts:settings' %}"
-                            class="nav-link {% if page == 3 %}nav-link-active{% endif %}">
-                            <i class="fas fa-cog"></i>
-                        </a>
-                    </div>
+                <div class="col-4 d-flex align-items-center justify-content-center">
+                    <a href="{% url 'Chat:chat_choice' %}"
+                       class="nav-link {% if page == 2 %}nav-link-active{% endif %}">
+                        <i class="fas fa-comments"></i>
+                    </a>
+                </div>
+                <div class="col-4 d-flex align-items-center justify-content-center">
+                    <a href="{% url 'accounts:settings' %}"
+                       class="nav-link {% if page == 3 %}nav-link-active{% endif %}">
+                        <i class="fas fa-cog"></i>
+                    </a>
                 </div>
             </div>
-        </footer>
-    </div>
-    {% endblock %}
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+        </div>
+    </footer>
+</div>
+{% endblock %}
+
+
+
+<script src="{% static 'pwaMessenger/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'pwaMessenger/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'pwaMessenger/js/popper.min.js' %}"></script>
+<script src="{% static 'pwaMessenger/js/select2.min.js' %}"></script>
+<script src="{% static 'pwaMessenger/js/mdb.min.js' %}"></script>
+
+<!--<script src="{% static 'pwaMessenger/js/bootstrap-multiselect.js' %}"></script>-->
 
 {% block scripts %}
 
-{% endblock scripts %}
 
+{% endblock scripts %}
 </body>
 
 </html>

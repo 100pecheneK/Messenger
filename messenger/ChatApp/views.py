@@ -1,36 +1,68 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
 import json
-from .models import Room
+from .models import Room, Message
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
-def log_in(request):
-    return render(request, 'Chat/log_in.html', {})
-
+# Изменения:убрал ненужные вьюхи
 
 @login_required
 def chat_choice(request):
+    # if request.user.is_superuser:
+    #     users = User.objects.exclude(is_superuser=True)
+    # else:
+    #     users = User.objects.filter(username=request.user)
+
+    # Тут поиск
+    search_query = request.GET.get('search', '')
+
+    if request.user.is_superuser:
+        rooms = Room.objects.all()
+        is_admin = True
+        if search_query:
+            rooms = Room.objects.filter(name__icontains=search_query)
+    else:
+        rooms = Room.objects.filter(name=request.user)
+
+    context = {
+        'page': 2,
+        'users': rooms,
+        'page_title': 'Диалоги',
+    }
+    return render(request, 'Chat/chat_choice.html', context)
+
+@permission_required('polls.can_vote')
+def distribution(request):
+
     if request.user.is_superuser:
         users = User.objects.exclude(is_superuser=True)
     else:
         users = User.objects.filter(username=request.user)
 
     context = {
+        'page_title': 'Групповая рассылка',
         'users': users,
     }
-    return render(request, 'Chat/chat_choice.html', context)
+    return render(request, 'Chat/distribution.html', context)
 
-
-@login_required
-def chat_for_all(request):
-    context = {
-        'superuser_check': request.user.is_superuser,
-    }
-    return render(request, 'Chat/chat_for_all.html', context)
+@permission_required('polls.can_vote')
+def save_distribution(request):
+    # TODO print users
+    users = request.POST['search']
+    content = request.POST['content']
+    print('Content:' + content)
+    # for user in users:
+    print(len(users))
+    print(users.reverse())
+        # author = User.objects.get(username=request.user)
+        # current_room = Room.objects.get(name=user)
+        # Message.objects.create(content=content, author=author, room=current_room)
+    return HttpResponseRedirect(reverse('Chat:chat_choice'))
 
 
 @login_required
@@ -48,7 +80,7 @@ def room(request, room_name):
         Room.objects.create(name=room_name, user_simple=user,
                             user_admin=user_admin)
         current_room = Room.objects.get(name=room_name)
-    
+
     try:
         messages = current_room.message_set.all()
         # messages = serializers.serialize('json', messages)

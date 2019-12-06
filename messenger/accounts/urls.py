@@ -2,7 +2,10 @@ from django.urls import path
 from .views import \
     RegisterView, LoginView, logout_view, \
     main, settings, user_management, \
-    personal_settings, EditNamesView, delete_user, contacts, edit_user_img
+    personal_settings, EditNamesView, delete_user, edit_user_img
+
+#Изменения: убрал contacts из импорта
+
 
 app_name = 'accounts'
 urlpatterns = [
