@@ -11,6 +11,7 @@
       <change beforePath="$PROJECT_DIR$/messenger/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/messenger/messenger/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/messenger/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/pwaMessenger/static/pwaMessenger/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messenger/static/pwaMessenger/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/messenger/static/pwaMessenger/css/main.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -144,7 +145,7 @@
       <workItem from="1575090761420" duration="3807000" />
       <workItem from="1575263865586" duration="114000" />
       <workItem from="1575268583743" duration="2592000" />
-      <workItem from="1575350954466" duration="5505000" />
+      <workItem from="1575350954466" duration="5674000" />
     </task>
     <servers />
   </component>
