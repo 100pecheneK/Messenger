@@ -302,3 +302,14 @@ header h1 {
     border-radius: 40px;
     border: white solid 1px;
 }
+
+
+/* Поле поиска */
+.search-btn {
+    border-radius: 0px 100px 100px 0px;
+}
+
+.search-input {
+    border-radius: 100px 0px 0px 100px;
+    width: 100% !important;
+}
