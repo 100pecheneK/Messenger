@@ -36,9 +36,9 @@ def chat_choice(request):
     }
     return render(request, 'Chat/chat_choice.html', context)
 
+
 @permission_required('polls.can_vote')
 def distribution(request):
-
     if request.user.is_superuser:
         users = User.objects.exclude(is_superuser=True)
     else:
@@ -50,18 +50,18 @@ def distribution(request):
     }
     return render(request, 'Chat/distribution.html', context)
 
+
 @permission_required('polls.can_vote')
 def save_distribution(request):
-    # TODO print users
-    users = request.POST['search']
-    content = request.POST['content']
-    print('Content:' + content)
-    # for user in users:
-    print(len(users))
-    print(users.reverse())
-        # author = User.objects.get(username=request.user)
-        # current_room = Room.objects.get(name=user)
-        # Message.objects.create(content=content, author=author, room=current_room)
+    try:
+        content = request.POST['content']
+    except:
+        content = ''
+    users = request.POST.getlist('search')
+    for user in users:
+        author = User.objects.get(username=request.user)
+        current_room = Room.objects.get(name=user)
+        Message.objects.create(content=content, author=author, room=current_room)
     return HttpResponseRedirect(reverse('Chat:chat_choice'))
 
 
