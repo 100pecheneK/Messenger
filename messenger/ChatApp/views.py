@@ -7,31 +7,40 @@ import json
 from .models import Room, Message
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect
+from dataclasses import dataclass
+from django.db.models.query import QuerySet
 
 
-# Изменения:убрал ненужные вьюхи
+@dataclass
+class RoomNameAndUser:
+    room_name: str
+    user: QuerySet
+
 
 @login_required
 def chat_choice(request):
-    # if request.user.is_superuser:
-    #     users = User.objects.exclude(is_superuser=True)
-    # else:
-    #     users = User.objects.filter(username=request.user)
-
-    # Тут поиск
-    search_query = request.GET.get('search', '')
+    room_name_and_user = list()
 
     if request.user.is_superuser:
-        rooms = Room.objects.all()
-        is_admin = True
-        if search_query:
-            rooms = Room.objects.filter(name__icontains=search_query)
+        rooms_qs = Room.objects.exclude(name=request.user.username)
+        for room in rooms_qs:
+            room_name_and_user.append(
+                RoomNameAndUser(
+                    room_name=room.name,
+                    user=room.user_simple
+                )
+            )
     else:
-        rooms = Room.objects.filter(name=request.user)
-
+        room = Room.objects.get(name=request.user.username)
+        room_name_and_user.append(
+            RoomNameAndUser(
+                room_name=room.name,
+                user=room.user_admin
+            )
+        )
     context = {
         'page': 2,
-        'users': rooms,
+        'room_name_and_user': room_name_and_user,
         'page_title': 'Диалоги',
     }
     return render(request, 'Chat/chat_choice.html', context)
@@ -45,6 +54,7 @@ def distribution(request):
         users = User.objects.filter(username=request.user)
 
     context = {
+        'page': 2,
         'page_title': 'Групповая рассылка',
         'users': users,
     }
@@ -80,15 +90,23 @@ def room(request, room_name):
         Room.objects.create(name=room_name, user_simple=user,
                             user_admin=user_admin)
         current_room = Room.objects.get(name=room_name)
-
     try:
-        messages = current_room.message_set.all()
-        # messages = serializers.serialize('json', messages)
-        # return HttpResponse(messages, content_type='application/json')
+        messages = current_room.message.all()
     except:
-        print('Error str 51 in views.py')
+        messages = None
 
+    if request.user == user_admin:
+        if user.first_name != '' and user.last_name != '':
+            page_title = f'{user.first_name} {user.last_name}'
+        else:
+            page_title = user.username
+    elif request.user == user:
+        if user_admin.first_name != '' and user_admin.last_name != '':
+            page_title = f'{user_admin.first_name} {user_admin.last_name}'
+        else:
+            page_title = user_admin.username
     context = {
+        'page_title': page_title,
         'messages': messages,
         'current_room_name': mark_safe(json.dumps(current_room.name)),
         'room_name_json': mark_safe(json.dumps(user.username)),

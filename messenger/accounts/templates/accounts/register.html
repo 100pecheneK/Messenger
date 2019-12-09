@@ -1,36 +1,45 @@
 {% extends 'pwaMessenger/main.html' %}
+{% block nav %}
+<li class="nav-item">
+    <a class="nav-link p-0" href="{% url 'accounts:settings' %}">
+        <svg fill="#FFFFFF" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
+            <path d="M0-.5h24v24H0z" fill="none"/>
+        </svg>
+    </a>
+</li>
+{% endblock nav %}
 {% block title %}{{page_title}}{% endblock title %}
 {% block main %}
-
-<div class="row px-4">
-    <div class="col-12 p-3 mt-5">
-        <form method='POST' action="{% url 'accounts:register' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="loginInput">Логин</label>
+<div class="col-12 p-3">
+    <form method='POST' action="{% url 'accounts:register' %}">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="col-md-4 mb-3 md-form">
+                <label for="loginInput" class="text-white">Логин</label>
                 {{ form.username }}
                 {% if form.username.errors %}
                 {{ form.username.errors }}
                 {% endif %}
             </div>
-            <div class="form-group">
-                <label for="passwordInput">Пароль</label>
+            <div class="col-md-4 mb-3 md-form">
+                <label for="passwordInput" class="text-white">Пароль</label>
                 {{ form.password }}
                 {% if form.password.errors %}
                 {{ form.password.errors }}
                 {% endif %}
             </div>
-            <div class="form-group">
-                <label for="passwordInput">Пароль ещё раз</label>
+            <div class="col-md-4 mb-3 md-form">
+                <label for="passwordInput" class="text-white">Пароль ещё раз</label>
                 {{ form.password2 }}
                 {% if form.password.errors %}
                 {{ form.password.errors }}
                 {% endif %}
             </div>
-            <button type="submit" class="btn btn-main btn-login">Создать</button>
-        </form>
-    </div>
+        </div>
+        <div class="from-row mt-4">
+            <button class="btn btn-default btn-block btn-sm" type="submit">Создать</button>
+        </div>
+    </form>
 </div>
-
-
-{% endblock %}
+{% endblock main %}

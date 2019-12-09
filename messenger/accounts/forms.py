@@ -8,20 +8,17 @@ from .models import Profile
 
 class RegisterForm(forms.ModelForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Имя пользователя',
-        'class': 'form-control form-login',
+        'class': 'form-control',
         'autocomplete': 'off',
         'id': 'loginInput',
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Пароль',
-        'class': 'form-control form-login',
+        'class': 'form-control',
         'autocomplete': 'off',
         'id': 'passwordInput',
     }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Пароль ещё раз',
-        'class': 'form-control form-login',
+        'class': 'form-control',
         'autocomplete': 'off',
         'id': 'passwordInput',
     }))
@@ -33,33 +30,31 @@ class RegisterForm(forms.ModelForm):
     def clean_username(self):
         username = self.cleaned_data['username']
         try:
-            tools.change_widget_attrs_class_to_invalid(self, 'username', 'Имя пользователя')
+            tools.change_widget_attrs_class_to_invalid(self, 'username')
             user = User.objects.get(username=username)
             raise ValidationError('Имя пользователя занято')
         except User.DoesNotExist:
-            tools.change_widget_attrs_class_to_valid(self, 'username', 'Имя пользователя')
+            tools.change_widget_attrs_class_to_valid(self, 'username')
             return username
 
     def clean_password(self):
         password = self.cleaned_data['password']
         password2 = self.data['password2']
         if password != password2:
-            tools.change_widget_attrs_class_to_invalid(self, 'password', 'Пароль')
-            tools.change_widget_attrs_class_to_invalid(self, 'password2', 'Пароль ещё раз')
+            tools.change_widget_attrs_class_to_invalid(self, 'password')
+            tools.change_widget_attrs_class_to_invalid(self, 'password2')
             raise ValidationError('Пароли не совпадают')
         return password
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Имя пользователя',
-        'class': 'form-control form-login',
+        'class': 'form-control',
         'autocomplete': 'off',
         'id': 'loginInput',
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Пароль',
-        'class': 'form-control form-login',
+        'class': 'form-control',
         'autocomplete': 'off',
         'id': 'passwordInput',
     }))
@@ -70,9 +65,9 @@ class LoginForm(forms.Form):
         username = self.cleaned_data['username']
         try:
             user = User.objects.get(username=username)
-            tools.change_widget_attrs_class_to_valid(self, 'username', 'Имя пользователя')
+            tools.change_widget_attrs_class_to_valid(self, 'username')
         except User.DoesNotExist:
-            tools.change_widget_attrs_class_to_invalid(self, 'username', 'Имя пользователя')
+            tools.change_widget_attrs_class_to_invalid(self, 'username')
             raise ValidationError('Пользователя не существует')
         return username
 
@@ -81,19 +76,17 @@ class LoginForm(forms.Form):
         password = self.cleaned_data['password']
         user = authenticate(username=username, password=password)
         if user is None:
-            tools.change_widget_attrs_class_to_invalid(self, 'password', 'Пароль')
+            tools.change_widget_attrs_class_to_invalid(self, 'password')
             raise ValidationError('Пароль не верный')
         return password
 
 
 class EditUserNames(forms.Form):
     first_name = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Имя',
         'class': 'form-control',
         'autocomplete': 'off',
     }))
     last_name = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Фамилия',
         'class': 'form-control',
         'autocomplete': 'off',
     }))

@@ -1,95 +1,35 @@
 {% extends 'pwaMessenger/main.html' %}
+{% block nav %}
+<li class="nav-item">
+    <a class="nav-link p-0" href="{% url 'Chat:chat_choice' %}">
+        <svg fill="#FFFFFF" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
+            <path d="M0-.5h24v24H0z" fill="none"/>
+        </svg>
+    </a>
+</li>
+{% endblock nav %}
 {% block title %}{{page_title}}{% endblock title %}
 
 {% block main %}
-
-<!--<style>-->
-<!--    /*.md-form{*/-->
-<!--    /*    border-radius: 100px;*/-->
-<!--    /*    background-color: whitesmoke;*/-->
-<!--    /*    border: 0px!important;*/-->
-<!--    /*    border-bottom: 0px!important;*/-->
-<!--    /*}*/-->
-<!--    .select-wrapper input.select-dropdown {-->
-<!--        /*padding-left: 1em;*/-->
-<!--        background-color: white;-->
-<!--        border-radius: 100px;-->
-<!--        border: 0px !important;-->
-<!--        border-bottom: 0px !important;-->
-<!--        text-align: center;-->
-<!--    }-->
-
-<!--    .picker, .select-wrapper .select-dropdown {-->
-<!--        border-radius: 10px;-->
-<!--        padding: 20px;-->
-<!--    }-->
-<!--</style>-->
+<div class="col-12 p-3">
+    <form action="{% url 'Chat:save_distribution' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control form-control-white" id="formGroupInput" name="content"
+                   placeholder="Сообщение для рассылки...">
+        </div>
+        <select class="mdb-select md-form" multiple searchable="Найти адресатов.." id="SELECT"
+                name="search">
+            <option value="default" disabled selected>Выберите адресатов</option>
+            {% for user in users %}
+            <option value="{{user}}">{{user}}</option>
+            {% endfor %}
+        </select>
 
 
-<!--<div class="container">-->
-<!--    <div class="row d-block">-->
-<!--        <div class="col-12">-->
-            <form action="{% url 'Chat:save_distribution' %}" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <input type="text" class="form-control" id="formGroupInput" name="content" placeholder="Сообщение для рассылки...">
-                </div>
+        <button class="btn btn-default" type="submit" id="button">Разослать</button>
 
-                <select class="mdb-select md-form" multiple searchable="Найти адресатов.." id="SELECT" name="search">
-                    <option value="default" disabled selected>Выберите адресатов</option>
-                    {% for user in users %}
-                    <option value="{{user}}">{{user}}</option>
-                    {% endfor %}
-                </select>
-
-
-                <button class="btn btn-primary" type="submit" id="button">Разослать</button>
-
-            </form>
-
-<!--<div class="row">-->
-<!--    <div class="col-md-12">-->
-
-<!--        <select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">-->
-<!--            <option value="" disabled selected>Choose your country</option>-->
-<!--            <option value="1" selected>USA</option>-->
-<!--            <option value="2" selected>Germany</option>-->
-<!--            <option value="3" selected>France</option>-->
-<!--            <option value="4">Poland</option>-->
-<!--            <option value="5">Japan</option>-->
-<!--        </select>-->
-<!--        <label class="mdb-main-label">Label example</label>-->
-<!--        <button class="btn-save btn btn-primary btn-sm">Save</button>-->
-
-<!--    </div>-->
-<!--</div>-->
-
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-<!--<button class="btn btn-primary myBtn">-->
-<!--    Get values-->
-<!--</button>-->
-
+    </form>
+</div>
 {% endblock %}
-
-
-{% block scripts %}
-<!--  Адаптивный поиск  -->
-<script>
-    btn = $('.btn-save');
-    btn.on('click', function () {
-        var selectValue = $('.select-wrapper .select-dropdown.form-control').val();
-        alert(selectValue);
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        $('.mdb-select').materialSelect();
-    });
-</script>
-
-{% endblock scripts %}

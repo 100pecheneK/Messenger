@@ -1,81 +1,74 @@
 {% extends 'pwaMessenger/main.html' %}
 {% block title %}{{page_title}}{% endblock title %}
+{% block search %}
+<button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent1"
+        aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="dark-blue-text">
+                <i class="fas fa-bars fa-1x"></i>
+            </span>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent1">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <select class="mdb-select md-form dropdown-default" searchable="Поиск">
+                <option value="" disabled selected>Выберите контакт</option>
+                {% for user in users %}
+                {% if user.first_name != '' and user.last_name != ''%}
+                <option data-url="{% url 'Chat:room' user %}">{{ user.first_name}} {{ user.last_name}} ({{user}})
+                </option>
+                {% else %}
+                <option data-url="{% url 'Chat:room' user %}">{{user}}</option>
+                {% endif %}
+
+                {% endfor %}
+            </select>
+        </li>
+        <li class="nav-item">
+            <label class="mdb-main-label">Выберите контакт</label>
+        </li>
+        <li class="nav-item d-flex justify-content-center">
+            <a href="{% url 'Chat:distribution' %}" class="mdb-main-label btn btn-default">Групповая рассылка</a>
+        </li>
+    </ul>
+</div>
+{% endblock search %}
 {% block main %}
-
-<!--Поиск-->
-<!--<form class="form-inline" action="{% url 'accounts:main' %}" method="GET">-->
-<!--    {% csrf_token %}-->
-<!--    <div class="col-10 pr-0">-->
-<!--        <input type="text" class="form-control form-login input-msg search-input" name="search" autocomplete="off"-->
-<!--               id="chat-message-input" placeholder="Найти контакт...">-->
-<!--    </div>-->
-<!--    <div class="col-2 pl-0">-->
-<!--        <button type="submit" class="btn btn-main send-msg search-btn" id="chat-message-submit"><i-->
-<!--                class="fa fa-search"></i></button>-->
-<!--    </div>-->
-<!--</form>-->
-
-
-<div class="row m-0 scroll">
-
-    <div class="col-12">
-        <div class="row">
-            <div class="col-12">
-                <select class="js-example-basic-single" name="state" style="width: 100%;">
-                    <option></option>
-                    {% for user in users %}
-                    <option data-url="{% url 'Chat:room' user %}">{{user}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-        {% for user in users %}
-        <div class="col-12 mt-1 p-3 d-flex align-items-center justify-content-between contact">
-            <h3>{{user}}</h3>
-            <a href="{% url 'Chat:room' user %}"><i class="fa fa-angle-right"></i></a>
-        </div>
-        {% endfor %}
+{% if request.user.is_superuser %}
+{% for user in users %}
+<div class="col-12 p-0 pt-1">
+    <div class="btn-group w-100 dropleft">
+        <a href="{% url 'Chat:room' user %}" class="btn elegant-color w-100 p-2 d-flex align-items-center">
+            <img src="media/{{ user.profile.photo  }}" class="user-photo elegant-color-dark rounded float-left" alt="">
+            {% if user.first_name != '' and user.last_name != ''%}
+            <p class="text-left h4-responsive text-capitalize ml-2">{{ user.first_name}} {{ user.last_name}}</p>
+            {% else %}
+            <p class="text-left h4-responsive text-capitalize ml-2">{{ user}}</p>
+            {% endif %}
+        </a>
     </div>
 </div>
-
-{% endblock %}
+{% endfor %}
+{% else %}
+<div class="col-12 p-0 pt-1">
+    <div class="btn-group w-100 dropleft">
+        <a href="{% url 'Chat:room' room_name %}" class="btn elegant-color w-100 p-2 d-flex align-items-center">
+            <img src="/media/{{ user_admin.profile.photo  }}" class="user-photo elegant-color-dark rounded float-left" alt="">
+            {% if user_admin.first_name != '' and user_admin.last_name != ''%}
+            <p class="text-left h4-responsive text-capitalize ml-2">{{ user_admin.first_name}} {{ user_admin.last_name}}</p>
+            {% else %}
+            <p class="text-left h4-responsive text-capitalize ml-2">{{ user_admin }}</p>
+            {% endif %}
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endblock main %}
 {% block scripts %}
 <!--  Адаптивный поиск  -->
 <script>
-    function matchCustom(params, data) {
-        // If there are no search terms, return all of the data
-        if ($.trim(params.term) === '') {
-            return 'Введите что-нибудь...';
-        }
-
-        // Do not display the item if there is no 'text' property
-        if (typeof data.text === 'undefined') {
-            return null;
-        }
-
-        // `params.term` should be the term that is used for searching
-        // `data.text` is the text that is displayed for the data object
-        if (data.text.indexOf(params.term) > -1) {
-            var modifiedData = $.extend({}, data, true);
-            modifiedData.text += ' (matched)';
-
-            // You can return modified objects from here
-            // This includes matching the `children` how you want in nested data sets
-            return modifiedData;
-        }
-
-        // Return `null` if the term should not be displayed
-        return null;
-    }
-
-    $(".js-example-basic-single").select2({
-        placeholder: "Найти контакт...",
-        allowClear: true,
-        matcher: matchCustom,
-    });
-
     //Переход по результату
-    $(".js-example-basic-single").change(function () {
+    $(".mdb-select").change(function () {
         let option = $(this).find('option:selected');
         if (option.data("url")) {
             window.location.href = option.data("url");

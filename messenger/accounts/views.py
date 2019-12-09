@@ -12,36 +12,21 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 
 
-# Изменения: закомментировал contacts (теперь его роль исполняет main)
-
-
 @login_required()
 def main(request):
-    search_query = request.GET.get('search', '')
-
+    context = dict()
     if request.user.is_superuser:
         users = User.objects.exclude(is_superuser=True)
-        if search_query:
-            users = User.objects.filter(username__icontains=search_query)
+        context['users'] = users
     else:
-        users = User.objects.filter(username=request.user)
+        user_admin = User.objects.get(is_superuser=True)
+        room_name = User.objects.get(username=request.user)
+        context['user_admin'] = user_admin
+        context['room_name'] = room_name
 
-    context = {
-        'page': 1,
-        'page_title': 'Контакты',
-        'users': users,
-    }
-    # return render(request, 'pwaMessenger/main.html', context)
+    context['page'] = 1
+    context['page_title'] = 'Контакты'
     return render(request, 'pwaMessenger/contacts.html', context)
-
-
-# @login_required()
-# def contacts(request):
-#     context = {
-#         'page': 1,
-#         'page_title': 'Контакты',
-#     }
-#     return render(request, 'pwaMessenger/contacts.html', context)
 
 
 @login_required()
@@ -69,7 +54,7 @@ def personal_settings(request):
     current_user = Profile.objects.get(user__username=request.user)
     context = {
         'page': 3,
-        'page_title': 'Личные настройки',
+        'page_title': 'Профиль',
         'current_user': current_user,
     }
     return render(request, 'accounts/personal_settings.html', context)
@@ -90,7 +75,7 @@ class EditNamesView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super(EditNamesView, self).get_context_data(**kwargs)
         context['page'] = 3
-        context['page_title'] = 'Личные настройки'
+        context['page_title'] = 'Профиль'
         return context
 
     def get(self, request):
@@ -126,6 +111,7 @@ def edit_user_img(request):
             return HttpResponseRedirect(reverse('accounts:settings'))
     context = {
         'form': form,
+        'page_title': 'Профиль',
     }
     return render(request, "accounts/edit_user_img.html", context)
 
@@ -227,7 +213,7 @@ class LoginView(FormView):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(reverse('accounts:main'))
+                    return HttpResponseRedirect(reverse('Chat:chat_choice'))
 
         return super(LoginView, self).get(request, form=form)
 
