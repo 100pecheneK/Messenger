@@ -56,22 +56,22 @@
                 <p class="text-left h4-responsive text-capitalize ml-2">{{ rnau.user }} </p>
                 {% endif %}
 
-                <div class="d-flex align-items-center justify-content-between">
-                    <div class="ellipsis">{{ rnau.last_message_content }}</div>
-<!--                    <p class="text-left text-white-50 text-capitalize ml-2 d-flex justify-content-between"-->
-<!--                       id="last-message"></p>-->
-                    <em>{{ rnau.last_message_send_date }}</em>
+                <div class=" ml-2 text-white-50 align-items-center">
+                    <div><p class="ellipsis text-capitalize">{{ rnau.last_message_content }}</p></div>
+                    <div class="d-flex justify-content-start"><em>{{ rnau.last_message_send_date }}</em></div>
                 </div>
             </div>
 
         </a>
+        {% if request.user.is_superuser %}
         <button type="button" class="btn elegant-color dropdown-toggle px-3" data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false">
         </button>
         <div class="dropdown-menu danger-color">
-            <a class="dropdown-item danger-color text-white" href="#">Удалить</a>
+            <a class="dropdown-item danger-color text-white" href="{% url 'Chat:delete_room' rnau.user %}">Удалить</a>
         </div>
+        {% endif %}
     </div>
     {% endfor %}
 </div>

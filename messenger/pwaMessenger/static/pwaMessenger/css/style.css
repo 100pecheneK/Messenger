@@ -165,7 +165,6 @@ a:hover {
 .bubble-answer::before {
     background-color: #2BBBAD;
     right: -11px;
-
 }
 
 .message-time {
@@ -184,20 +183,12 @@ a:hover {
     text-align: center;
 }
 
-/* /пузырьки сообщений */
-
-#last-message {
-    color: #222;
-    margin: 0 auto;
-    font-weight: lighter;
-    padding: 10px 0;
-    text-align: center;
-    text-shadow: 0px 1px 0px #fff;
-    max-width: 160px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.text-break {
+    overflow-wrap: break-word !important;
+    word-break: break-word;
 }
+
+/* /пузырьки сообщений */
 
 
 .ellip {
@@ -220,15 +211,11 @@ a:hover {
 }
 
 .ellipsis {
-    max-width: 70%;
-    padding-left: 1em;
+    max-width: 80%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-
-    font-weight: lighter;
-    text-align: center;
-    text-shadow: 0px 1px 0px #fff;
+    text-align: start;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

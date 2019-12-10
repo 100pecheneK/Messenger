@@ -13,6 +13,7 @@ from django.db.models.query import QuerySet
 import time
 import json
 
+
 @dataclass
 class DialogData:
     room_name: str
@@ -20,14 +21,17 @@ class DialogData:
     last_message_send_date: str
     user: QuerySet
 
+
 @login_required
 def chat_choice(request):
+    context = {
+        'page': 2,
+        'page_title': 'Диалоги',
+    }
     room_name_and_user = list()
     unique_rooms = list()
     if request.user.is_superuser:
         rooms_qs = Room.objects.exclude(name=request.user.username).order_by('-message__send_date')
-
-
         for i, room in enumerate(rooms_qs):
             try:
                 msg_content = room.message.last().content
@@ -43,21 +47,21 @@ def chat_choice(request):
                     user=room.user_simple
                 )
             )
+
             if room_name_and_user[i] not in unique_rooms:
                 unique_rooms.append(room_name_and_user[i])
-
-
     else:
-        # strftime('%m/%d/%Y')
-        room = Room.objects.get(name=request.user.username)
+        try:
+            room = Room.objects.get(name=request.user.username)
+        except:
+            return render(request, 'Chat/chat_choice.html', context)
         try:
             msg_content = room.message.last().content
             msg_date = room.message.last().send_date
-
         except:
             msg_content = ''
             msg_date = ''
-        room_name_and_user.append(
+        unique_rooms.append(
             DialogData(
                 room_name=room.name,
                 last_message_content=msg_content,
@@ -65,45 +69,9 @@ def chat_choice(request):
                 user=room.user_admin
             )
         )
-    context = {
-        'page': 2,
-        'room_name_and_user': unique_rooms,
-        'page_title': 'Диалоги',
-    }
+
+    context['room_name_and_user'] = unique_rooms
     return render(request, 'Chat/chat_choice.html', context)
-#
-# @login_required
-# def chat_choice(request):
-#     room_name_and_user = list()
-#     if request.user.is_superuser:
-#         try:
-#             rooms_qs = Room.objects.exclude(name=request.user.username)
-#             for room in rooms_qs:
-#                 room_name_and_user.append(
-#                     RoomNameAndUser(
-#                         room_name=room.name,
-#                         user=room.user_simple
-#                     )
-#                 )
-#         except Room.DoesNotExist:
-#             pass
-#     else:
-#         try:
-#             room = Room.objects.get(name=request.user.username)
-#             room_name_and_user.append(
-#                 RoomNameAndUser(
-#                     room_name=room.name,
-#                     user=room.user_admin
-#                 )
-#             )
-#         except Room.DoesNotExist:
-#             pass
-#     context = {
-#         'page': 2,
-#         'room_name_and_user': room_name_and_user,
-#         'page_title': 'Диалоги',
-#     }
-#     return render(request, 'Chat/chat_choice.html', context)
 
 
 @permission_required('polls.can_vote')
@@ -128,9 +96,16 @@ def save_distribution(request):
     except:
         content = ''
     users = request.POST.getlist('search')
+    user_admin = User.objects.get(is_superuser=True)
     for user in users:
-        author = User.objects.get(username=request.user)
-        current_room = Room.objects.get(name=user)
+        author = User.objects.get(username=user)
+
+        try:
+            current_room = Room.objects.get(name=user)
+        except Room.DoesNotExist:
+            room = Room.objects.create(name=user, user_simple=author,
+                                       user_admin=user_admin)
+            current_room = Room.objects.get(name=user)
         Message.objects.create(content=content, author=author, room=current_room)
     return HttpResponseRedirect(reverse('Chat:chat_choice'))
 
@@ -175,3 +150,13 @@ def room(request, room_name):
     }
 
     return render(request, 'Chat/room.html', context)
+
+
+@permission_required('polls.can_vote')
+def delete_room(reqsuet, room_name):
+    try:
+        room = Room.objects.get(name=room_name)
+        room.delete()
+    except Room.DoesNotExist:
+        pass
+    return HttpResponseRedirect(reverse('Chat:chat_choice'))
