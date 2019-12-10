@@ -12,43 +12,92 @@ from django.db.models.query import QuerySet
 
 
 @dataclass
-class RoomNameAndUser:
+class DialogData:
     room_name: str
+    last_message_content: str
+    last_message_send_date: str
     user: QuerySet
-
 
 @login_required
 def chat_choice(request):
     room_name_and_user = list()
+    unique_rooms = list()
     if request.user.is_superuser:
-        try:
-            rooms_qs = Room.objects.exclude(name=request.user.username)
-            for room in rooms_qs:
-                room_name_and_user.append(
-                    RoomNameAndUser(
-                        room_name=room.name,
-                        user=room.user_simple
-                    )
-                )
-        except Room.DoesNotExist:
-            pass
-    else:
-        try:
-            room = Room.objects.get(name=request.user.username)
+        rooms_qs = Room.objects.exclude(name=request.user.username).order_by('-message__send_date')
+
+        for i, room in enumerate(rooms_qs):
+            try:
+                msg_content = room.message.last().content
+                msg_date = room.message.last().send_date
+            except:
+                msg_content = ''
+                msg_date = ''
             room_name_and_user.append(
-                RoomNameAndUser(
+                DialogData(
                     room_name=room.name,
-                    user=room.user_admin
+                    last_message_content=msg_content,
+                    last_message_send_date=msg_date,
+                    user=room.user_simple
                 )
             )
-        except Room.DoesNotExist:
-            pass
+            if room_name_and_user[i] not in unique_rooms:
+                unique_rooms.append(room_name_and_user[i])
+
+    else:
+        room = Room.objects.get(name=request.user.username)
+        try:
+            msg_content = room.message.last().content
+            msg_date = room.message.last().send_date
+        except:
+            msg_content = ''
+            msg_date = ''
+        room_name_and_user.append(
+            DialogData(
+                room_name=room.name,
+                last_message_content=msg_content,
+                last_message_send_date=msg_date,
+                user=room.user_admin
+            )
+        )
     context = {
         'page': 2,
-        'room_name_and_user': room_name_and_user,
+        'room_name_and_user': unique_rooms,
         'page_title': 'Диалоги',
     }
     return render(request, 'Chat/chat_choice.html', context)
+#
+# @login_required
+# def chat_choice(request):
+#     room_name_and_user = list()
+#     if request.user.is_superuser:
+#         try:
+#             rooms_qs = Room.objects.exclude(name=request.user.username)
+#             for room in rooms_qs:
+#                 room_name_and_user.append(
+#                     RoomNameAndUser(
+#                         room_name=room.name,
+#                         user=room.user_simple
+#                     )
+#                 )
+#         except Room.DoesNotExist:
+#             pass
+#     else:
+#         try:
+#             room = Room.objects.get(name=request.user.username)
+#             room_name_and_user.append(
+#                 RoomNameAndUser(
+#                     room_name=room.name,
+#                     user=room.user_admin
+#                 )
+#             )
+#         except Room.DoesNotExist:
+#             pass
+#     context = {
+#         'page': 2,
+#         'room_name_and_user': room_name_and_user,
+#         'page_title': 'Диалоги',
+#     }
+#     return render(request, 'Chat/chat_choice.html', context)
 
 
 @permission_required('polls.can_vote')
