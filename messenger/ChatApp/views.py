@@ -20,24 +20,29 @@ class RoomNameAndUser:
 @login_required
 def chat_choice(request):
     room_name_and_user = list()
-
     if request.user.is_superuser:
-        rooms_qs = Room.objects.exclude(name=request.user.username)
-        for room in rooms_qs:
+        try:
+            rooms_qs = Room.objects.exclude(name=request.user.username)
+            for room in rooms_qs:
+                room_name_and_user.append(
+                    RoomNameAndUser(
+                        room_name=room.name,
+                        user=room.user_simple
+                    )
+                )
+        except Room.DoesNotExist:
+            pass
+    else:
+        try:
+            room = Room.objects.get(name=request.user.username)
             room_name_and_user.append(
                 RoomNameAndUser(
                     room_name=room.name,
-                    user=room.user_simple
+                    user=room.user_admin
                 )
             )
-    else:
-        room = Room.objects.get(name=request.user.username)
-        room_name_and_user.append(
-            RoomNameAndUser(
-                room_name=room.name,
-                user=room.user_admin
-            )
-        )
+        except Room.DoesNotExist:
+            pass
     context = {
         'page': 2,
         'room_name_and_user': room_name_and_user,
