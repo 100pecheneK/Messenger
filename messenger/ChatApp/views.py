@@ -3,13 +3,15 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
-import json
+
 from .models import Room, Message
-from django.core import serializers
-from django.http import HttpResponse, HttpResponseRedirect
+
+from django.http import HttpResponseRedirect
 from dataclasses import dataclass
 from django.db.models.query import QuerySet
 
+import time
+import json
 
 @dataclass
 class DialogData:
@@ -24,6 +26,7 @@ def chat_choice(request):
     unique_rooms = list()
     if request.user.is_superuser:
         rooms_qs = Room.objects.exclude(name=request.user.username).order_by('-message__send_date')
+
 
         for i, room in enumerate(rooms_qs):
             try:
@@ -43,11 +46,14 @@ def chat_choice(request):
             if room_name_and_user[i] not in unique_rooms:
                 unique_rooms.append(room_name_and_user[i])
 
+
     else:
+        # strftime('%m/%d/%Y')
         room = Room.objects.get(name=request.user.username)
         try:
             msg_content = room.message.last().content
             msg_date = room.message.last().send_date
+
         except:
             msg_content = ''
             msg_date = ''

@@ -13,9 +13,10 @@ class Room(models.Model):
     def __str__(self):
         return self.name
 
+
 class Message(models.Model):
     content = models.TextField(max_length=500)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    send_date = models.DateTimeField(default=timezone.now)
+    send_date = models.DateTimeField(auto_now_add=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='message')
