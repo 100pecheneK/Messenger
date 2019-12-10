@@ -3,44 +3,72 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
-import json
+
 from .models import Room, Message
-from django.core import serializers
-from django.http import HttpResponse, HttpResponseRedirect
+
+from django.http import HttpResponseRedirect
 from dataclasses import dataclass
 from django.db.models.query import QuerySet
 
+import time
+import json
 
 @dataclass
-class RoomNameAndUser:
+class DialogData:
     room_name: str
+    last_message_content: str
+    last_message_send_date: str
     user: QuerySet
 
 
 @login_required
 def chat_choice(request):
     room_name_and_user = list()
-
+    unique_rooms = list()
     if request.user.is_superuser:
-        rooms_qs = Room.objects.exclude(name=request.user.username)
+        rooms_qs = Room.objects.exclude(name=request.user.username).order_by('-message__send_date')
+
+        i = 0
         for room in rooms_qs:
+            try:
+                msg_content = room.message.last().content
+                msg_date = room.message.last().send_date
+            except:
+                msg_content = ''
+                msg_date = ''
             room_name_and_user.append(
-                RoomNameAndUser(
+                DialogData(
                     room_name=room.name,
+                    last_message_content=msg_content,
+                    last_message_send_date=msg_date,
                     user=room.user_simple
                 )
             )
+            if room_name_and_user[i] not in unique_rooms:
+                unique_rooms.append(room_name_and_user[i])
+            i += 1
+
     else:
+        # strftime('%m/%d/%Y')
         room = Room.objects.get(name=request.user.username)
+        try:
+            msg_content = room.message.last().content
+            msg_date = room.message.last().send_date
+            # msg_date = time.strftime('%m/%d/%Y', msg_date)
+        except:
+            msg_content = ''
+            msg_date = ''
         room_name_and_user.append(
-            RoomNameAndUser(
+            DialogData(
                 room_name=room.name,
+                last_message_content=msg_content,
+                last_message_send_date=msg_date,
                 user=room.user_admin
             )
         )
     context = {
         'page': 2,
-        'room_name_and_user': room_name_and_user,
+        'room_name_and_user': unique_rooms,
         'page_title': 'Диалоги',
     }
     return render(request, 'Chat/chat_choice.html', context)
