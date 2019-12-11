@@ -14,7 +14,7 @@
 {% for user in users %}
 <div class="col-12 p-0 pt-1">
     <div class="btn-group w-100 dropleft">
-        <a href="user.html" class="btn elegant-color w-100 p-2 d-flex align-items-center">
+        <a class="btn elegant-color w-100 p-2 d-flex align-items-center">
             <img src="/media/{{ user.profile.photo }}" class="user-photo elegant-color-dark rounded float-left" alt="">
             {% if user.first_name != '' and user.last_name != ''%}
             <p class="text-left h4-responsive text-capitalize ml-2">

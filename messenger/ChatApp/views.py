@@ -98,13 +98,13 @@ def save_distribution(request):
     users = request.POST.getlist('search')
     user_admin = User.objects.get(is_superuser=True)
     for user in users:
-        author = User.objects.get(username=user)
-
+        author = User.objects.get(username=user_admin)
         try:
             current_room = Room.objects.get(name=user)
         except Room.DoesNotExist:
-            room = Room.objects.create(name=user, user_simple=author,
-                                       user_admin=user_admin)
+            user = User.objects.get(username=user)
+            Room.objects.create(name=user.username, user_simple=user,
+                                user_admin=author)
             current_room = Room.objects.get(name=user)
         Message.objects.create(content=content, author=author, room=current_room)
     return HttpResponseRedirect(reverse('Chat:chat_choice'))

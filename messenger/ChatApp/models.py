@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Room(models.Model):
@@ -18,5 +18,5 @@ class Message(models.Model):
     content = models.TextField(max_length=500)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    send_date = models.DateTimeField(auto_now_add=True)
+    send_date = models.DateTimeField(default=timezone.now())
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='message')

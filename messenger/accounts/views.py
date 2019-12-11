@@ -43,7 +43,7 @@ def user_management(request):
     users = User.objects.exclude(is_superuser=True)
     context = {
         'page': 3,
-        'page_title': 'Управление пользователями',
+        'page_title': 'Удаление пользователей',
         'users': users,
     }
     return render(request, 'accounts/user_management.html', context)

@@ -3,6 +3,7 @@ from channels.db import database_sync_to_async
 import json
 from django.contrib.auth.models import User
 from .models import *
+from datetime import datetime, timedelta
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -19,7 +20,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
         print('Соединение установлено!')
 
-
     async def disconnect(self, close_code):
         # Leave room group
         await self.channel_layer.group_discard(
@@ -35,9 +35,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             message = text_data_json['message']
             author_login = text_data_json['author']
             current_room_name = text_data_json['current_room_name']
-            #Занесение сообщения в БД
-            await self.create_message(content=message, author_login=author_login, current_room_name=current_room_name)
-
+            # Занесение сообщения в БД
+            date = await self.create_message(content=message, author_login=author_login, current_room_name=current_room_name)
+            date = await self.get_date(date)
             # Send message to room group
             await self.channel_layer.group_send(
                 self.room_group_name,
@@ -45,6 +45,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'type': 'chat_message',
                     'message': message,
                     'author': author_login,
+                    'date': date,
                 }
             )
 
@@ -54,11 +55,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if event['message']:
             message = event['message']
             author_login = event['author']
-
+            date = event['date']
             # Send message to WebSocket
             await self.send(text_data=json.dumps({
                 'message': message,
                 'author': author_login,
+                'date': date,
             }))
 
     @database_sync_to_async
@@ -66,17 +68,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
         try:
             user = User.objects.get(username=author_login)
             current_room = Room.objects.get(name=current_room_name)
-            Message.objects.create(content=content, author=user, room=current_room)
+            m = Message.objects.create(content=content, author=user, room=current_room)
+            return m.send_date
         except User.DoesNotExist:
-            print('User doesnt exists.')
+            return False
 
-
-    # @database_sync_to_async
-    # def create_or_fetch_room(self, room_name, first_user, second_user):
-    #     try:
-    #         room = Room.objects.get(name=room_name)
-    #     except:
-    #         first_u = User.objects.get(username=first_user)
-    #         second_u = User.objects.get(username=second_user)
-    #         Room.objects.create()
-
+    async def get_date(self, date):
+        date += timedelta(hours=5)
+        year = date.year
+        month = date.month
+        day = date.day
+        if date.minute < 10:
+            minute = f'0{date.minute}'
+        else:
+            minute = date.minute
+        hour = date.hour
+        date = f'{hour}:{minute} {day}.{month}.{year}'
+        return date

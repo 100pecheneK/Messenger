@@ -220,3 +220,7 @@ a:hover {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.text-capitalize {
+    text-transform: none !important;
+}

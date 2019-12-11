@@ -50,16 +50,17 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col p-0">
-                        <div class="input-group pl-0">
-                            <input class="form-control form-control-white border-white" type="text" placeholder="Введите сообщение..."
-                                   aria-label="send-msg" id="chat-message-input">
-                            <div class="input-group-append">
-                                <button class="input-group-text elegant-color-dark lighten-1"
-                                        id="chat-message-submit">
-                                    <i class="fas fa-paper-plane text-white"></i>
-                                </button>
-                            </div>
+                    <div class="input-group pl-0">
+                        <input class="form-control form-control-white border-white" type="text"
+                               placeholder="Введите сообщение..."
+                               aria-label="send-msg" id="chat-message-input">
+                        <div class="input-group-append">
+                            <button class="input-group-text elegant-color-dark lighten-1"
+                                    id="chat-message-submit">
+                                <i class="fas fa-paper-plane text-white"></i>
+                            </button>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,19 +79,19 @@
     }
 
 
-
-    function createDivMessageQuestion(content) {
+    function createDivMessageQuestion(content, date) {
 
         var div = document.createElement('div');
-        div.innerHTML = '<div class="row"><div class="col-12 question justify-content-start mt-3"><div class="row"><div class="col-8"><div class="bubble bubble-question z-depth-1"><span>' + content + '<em class="text-light d-block message-time message-time-start">12:30</em></span></div></div></div></div></div>';
+        div.innerHTML = '<div class="row"><div class="col-12 question justify-content-start mt-3"><div class="row"><div class="col-10"><div class="bubble bubble-question z-depth-1"><span class="text-break">' + content + '<em class="text-light d-block message-time message-time-start">' + date + '</em></span></div></div></div></div></div>';
         return div;
     }
 
-    function createDivMessageAnswer(content) {
+    function createDivMessageAnswer(content, date) {
         var div = document.createElement('div');
-        div.innerHTML ='<div class="row"><div class="col-12 answer justify-content-end mt-3"><div class="row justify-content-end"><div class="col-8 d-flex justify-content-end"><div class="bubble bubble-answer z-depth-1"><span>' + content + '<em class="text-light d-block message-time message-time-end">12:30</em></span></div></div></div></div></div>';
+        div.innerHTML = '<div class="row"><div class="col-12 answer justify-content-end mt-3"><div class="row justify-content-end"><div class="col-10 d-flex justify-content-end"><div class="bubble bubble-answer z-depth-1"><span class="text-break">' + content + '<em class="text-light d-block message-time message-time-end">' + date + '</em></span></div></div></div></div></div>';
         return div;
     }
+
     $(document).ready(function () {
         scrollBot();
     })
@@ -110,13 +111,13 @@
 
         // let still_online = data['still_online'];
         if (data['message']) {
-            var message = data['message'];
-            var author = data['author'];
-
+            let message = data['message'];
+            let author = data['author'];
+            let date = data['date'];
             if (author == cur_user) {
-                var msg = createDivMessageAnswer(message);
+                var msg = createDivMessageAnswer(message, date);
             } else {
-                var msg = createDivMessageQuestion(message);
+                var msg = createDivMessageQuestion(message, date);
             }
             let main = $('#dialog');
             main.append(msg);
