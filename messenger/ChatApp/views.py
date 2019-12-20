@@ -153,7 +153,7 @@ def room(request, room_name):
 
 
 @permission_required('polls.can_vote')
-def delete_room(reqsuet, room_name):
+def delete_room(request, room_name):
     try:
         room = Room.objects.get(name=room_name)
         room.delete()
